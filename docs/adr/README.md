@@ -12,5 +12,6 @@
 | 0008 | Eventing transport and observability | accepted |
 | 0009 | Documentation and PR standard | accepted |
 | 0010 | Parallel workers and git flow | accepted |
+| 0011 | Replace Supabase with Auth.js + Neon (supersedes parts of 0004, 0006) | accepted |
 
 Project-level ADRs live in each repo under `docs/adr/` and start at 0001 again.

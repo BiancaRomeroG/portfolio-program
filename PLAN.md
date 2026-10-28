@@ -67,12 +67,12 @@ PR template fields are mandatory: context, change, how to test, screenshots/GIF 
 Each phase ends in a **gate** reviewed by the orchestrator against the checklist. Workers do not start the next phase until their gate is closed, but phases run in parallel across repos.
 
 ### Phase 0 — Program bootstrap (orchestrator, day 1)
-- [ ] Create the 4 public GitHub repos (empty, MIT, description, topics).
-- [ ] Clone into `D:\Repositorio\<repo>`.
-- [ ] Copy `templates/` into each repo, fill repo name, first commit `chore: bootstrap repo docs`.
-- [ ] Create Supabase projects `ledgerflow` and `incident-copilot` (free tier; pgvector enabled on the second).
-- [ ] Create GitHub issues from each spec's Phase 1 task list, labelled `phase:1`.
-- [ ] Launch W0–W3 with `workers/W*.md`.
+- [x] Create the 4 public GitHub repos (empty, MIT, description, topics).
+- [x] Clone into `D:Repositorio<repo>`.
+- [x] Copy `templates/` into each repo, fill repo name, first commit `chore: bootstrap repo docs`.
+- [x] ~~Create Supabase projects~~ Not possible on free plan; ADR-0011 switches to Auth.js + Neon.
+- [x] Labels created in each repo; workers create the Phase 1 issues themselves (protocol step 2).
+- [x] Launch W0–W3 with `workers/W*.md`.
 
 **Gate 0:** 4 repos exist with docs skeleton, workers running.
 
@@ -130,12 +130,12 @@ Accounts, all free, no card. Put the resulting values in each repo's `.env` loca
 | Service | For | What to create |
 |---------|-----|----------------|
 | Render.com | APIs hosting | Account linked to GitHub. Workers add `render.yaml` blueprints. |
-| Neon.tech | pulse DB | One project `pulse`, copy `DATABASE_URL`. |
+| Neon.tech | all three DBs (ADR-0011) | One project `nimbus-pay` with databases `ledgerflow`, `incident_copilot`, `pulse`; copy the three `DATABASE_URL`s. |
 | Groq console | incident-copilot LLM | API key. |
 | Upstash | pulse hosted transport | One Redis database, copy REST URL + token. |
-| GitHub OAuth App | pulse dashboard login | Settings, Developer settings, OAuth Apps. Callback `https://<pulse-web>.vercel.app/api/auth/callback/github`. |
+| GitHub OAuth App | dashboard login in all three web apps (ADR-0011) | Settings, Developer settings, OAuth Apps. One app per deployed web URL, callback `https://<web>.vercel.app/api/auth/callback/github`. |
 | Vercel | web hosting | Connected via MCP; orchestrator creates projects. |
-| Supabase | ledgerflow + incident-copilot | Orchestrator creates via MCP. You confirm the org. |
+| Supabase | not used (ADR-0011) | Free-plan limit reached by existing projects. Optional later. |
 
 Also send the orchestrator: LinkedIn URL, desired domain (or confirm `*.vercel.app`), a profile photo (optional), and real metrics for the CV placeholders.
 
@@ -153,7 +153,7 @@ Also send the orchestrator: LinkedIn URL, desired domain (or confirm `*.vercel.a
 
 | Gate | Status | Date | Notes |
 |------|--------|------|-------|
-| 0 | pending | | |
+| 0 | done | 2026-10-28 | Repos created and bootstrapped; Supabase replaced by Auth.js + Neon (ADR-0011); workers launched for Phase 1. |
 | 1 | pending | | |
 | 2 | pending | | |
 | 3 | pending | | |
